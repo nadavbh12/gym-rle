@@ -1,4 +1,5 @@
 import gym
+import gym_rle
 
 env = gym.make('ClassicKong-v0')
 env.reset()
