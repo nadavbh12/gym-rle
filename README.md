@@ -1,6 +1,6 @@
 # gym-rle
 
-The `Retro Learning Environment <https://github.com/nadavbh12/Retro-Learning-Environment>`_ supports SNES (Super Nintendo Entertainment System) video games.
+The [Retro Learning Environment](https://github.com/nadavbh12/Retro-Learning-Environment) supports SNES (Super Nintendo Entertainment System) video games such as Mario and Mortal Kombat.
 
 # Installation
 
