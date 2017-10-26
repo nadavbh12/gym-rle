@@ -19,31 +19,34 @@ def check_button(action_string, action, value, name, first):
     if (action & value) > 0:
         if first:
             action_string += name
+            first = False
         else:
             action_string += ' | ' + name
 
-    return action_string
+    return action_string, first
 
 
 def get_action_meaning(action):
     action_string = ''
-    first = False
-    action_string = check_button(action_string, action, 0x1, 'B', first)
-    action_string = check_button(action_string, action, 0x2, 'Y', first)
-    action_string = check_button(action_string, action, 0x4, 'SELECT', first)
-    action_string = check_button(action_string, action, 0x8, 'START', first)
-    action_string = check_button(action_string, action, 0x10, 'UP', first)
-    action_string = check_button(action_string, action, 0x20, 'DOWN', first)
-    action_string = check_button(action_string, action, 0x40, 'LEFT', first)
-    action_string = check_button(action_string, action, 0x80, 'RIGHT', first)
-    action_string = check_button(action_string, action, 0x100, 'A', first)
-    action_string = check_button(action_string, action, 0x200, 'X', first)
-    action_string = check_button(action_string, action, 0x400, 'L', first)
-    action_string = check_button(action_string, action, 0x800, 'R', first)
-    action_string = check_button(action_string, action, 0x1000, 'L2', first)
-    action_string = check_button(action_string, action, 0x2000, 'R2', first)
-    action_string = check_button(action_string, action, 0x4000, 'L3', first)
-    action_string = check_button(action_string, action, 0x8000, 'R3', first)
+    first = True
+    action_string, first = check_button(action_string, action, 0x1, 'B', first)
+    action_string, first = check_button(action_string, action, 0x2, 'Y', first)
+    action_string, first = check_button(action_string, action, 0x4, 'SELECT', first)
+    action_string, first = check_button(action_string, action, 0x8, 'START', first)
+    action_string, first = check_button(action_string, action, 0x10, 'UP', first)
+    action_string, first = check_button(action_string, action, 0x20, 'DOWN', first)
+    action_string, first = check_button(action_string, action, 0x40, 'LEFT', first)
+    action_string, first = check_button(action_string, action, 0x80, 'RIGHT', first)
+    action_string, first = check_button(action_string, action, 0x100, 'A', first)
+    action_string, first = check_button(action_string, action, 0x200, 'X', first)
+    action_string, first = check_button(action_string, action, 0x400, 'L', first)
+    action_string, first = check_button(action_string, action, 0x800, 'R', first)
+    action_string, first = check_button(action_string, action, 0x1000, 'L2', first)
+    action_string, first = check_button(action_string, action, 0x2000, 'R2', first)
+    action_string, first = check_button(action_string, action, 0x4000, 'L3', first)
+    action_string, first = check_button(action_string, action, 0x8000, 'R3', first)
+    if action_string == '':
+        action_string = 'NOOP'
 
     return action_string
 
@@ -124,7 +127,7 @@ class RleEnv(gym.Env, utils.EzPickle):
             reward += self.rle.act(action)
         ob = self._get_obs()
 
-        return ob, reward, self.rle.game_over(), {}
+        return ob, reward, self.rle.game_over(), {"rle.lives": self.rle.lives()}
 
     def _get_image(self):
         self.rle.getScreenRGB(self._buffer)
