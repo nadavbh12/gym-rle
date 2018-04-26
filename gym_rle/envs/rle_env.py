@@ -77,7 +77,8 @@ class RleEnv(gym.Env, utils.EzPickle):
 
         # Tune (or disable) RLE's action repeat:
         # https://github.com/openai/gym/issues/349
-        assert isinstance(repeat_action_probability, (float, int)), "Invalid repeat_action_probability: {!r}".format(repeat_action_probability)
+        assert isinstance(repeat_action_probability, (float, int)), \
+            "Invalid repeat_action_probability: {!r}".format(repeat_action_probability)
         self.rle.setFloat('repeat_action_probability'.encode('utf-8'), repeat_action_probability)
 
         self._seed()
@@ -93,7 +94,7 @@ class RleEnv(gym.Env, utils.EzPickle):
         if self._obs_type == 'ram':
             self.observation_space = spaces.Box(low=np.zeros(ram_size), high=np.zeros(ram_size)+255)
         elif self._obs_type == 'image':
-            self.observation_space = spaces.Box(low=0, high=255, shape=(screen_height, screen_width, ))
+            self.observation_space = spaces.Box(low=0, high=255, shape=(screen_height, screen_width, 3), dtype=np.uint8)
         else:
             raise error.Error('Unrecognized observation type: {}'.format(self._obs_type))
 
